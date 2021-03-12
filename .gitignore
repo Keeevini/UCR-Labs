@@ -1,0 +1,68 @@
+
+# CS100 Labs
+
+# Lab 1
+CS100-Labs/lab-01---intro-to-software/CMakeCache.txt
+CS100-Labs/lab-01---intro-to-software/CMakeFiles/
+CS100-Labs/lab-01---intro-to-software/cmake_install.cmake
+CS100-Labs/lab-01---intro-to-software/Makefile
+
+CS100-Labs/lab-01---intro-to-software/c-echo
+CS100-Labs/lab-01---intro-to-software/area_calculator
+CS100-Labs/lab-01---intro-to-software/bigger_area_calculator
+CS100-Labs/lab-01---intro-to-software/e-echo
+CS100-Labs/lab-01---intro-to-software/test
+
+# Lab 2
+CS100-Labs/lab-02---github-flow/c-echo-count
+CS100-Labs/lab-02---github-flow/test
+
+CS100-Labs/lab-02---github-flow/CMakeCache.txt
+CS100-Labs/lab-02---github-flow/CMakeFiles/
+CS100-Labs/lab-02---github-flow/cmake_install.cmake
+CS100-Labs/lab-02---github-flow/Makefile
+
+# Lab 3
+CS100-Labs/lab-03---composite-pattern/test
+CS100-Labs/lab-03---composite-pattern/lab
+CS100-Labs/lab-03---composite-pattern/lib/
+
+CS100-Labs/lab-03---composite-pattern/CMakeCache.txt
+CS100-Labs/lab-03---composite-pattern/CMakeFiles/
+CS100-Labs/lab-03---composite-pattern/cmake_install.cmake
+CS100-Labs/lab-03---composite-pattern/Makefile
+
+# Lab 4
+
+# Lab 5
+CS100-Labs/lab-05---strategy-pattern/CMakeFiles/
+CS100-Labs/lab-05---strategy-pattern/CMakeCache.txt
+CS100-Labs/lab-05---strategy-pattern/Makefile
+CS100-Labs/lab-05---strategy-pattern/cmake_install.cmake
+CS100-Labs/lab-05---strategy-pattern/lib/
+
+CS100-Labs/lab-05---strategy-pattern/#programs
+CS100-Labs/lab-05---strategy-pattern/test
+CS100-Labs/lab-05---strategy-pattern/spreadsheet
+
+# Lab 6
+
+# Lab 7
+CS100-Labs/lab-07---factory-pattern/CMakeFiles/
+CS100-Labs/lab-07---factory-pattern/Makefile
+CS100-Labs/lab-07---factory-pattern/cmake_install.cmake
+CS100-Labs/lab-07---factory-pattern/lib/
+CS100-Labs/lab-07---factory-pattern/CMakeCache.txt
+
+CS100-Labs/lab-07---factory-pattern/test
+CS100-Labs/lab-07---factory-pattern/calculator
+
+# Lab 8
+CS100-Labs/lab-08---visitor-pattern/CMakeFiles/
+CS100-Labs/lab-08---visitor-pattern/Makefile
+CS100-Labs/lab-08---visitor-pattern/cmake_install.cmake
+CS100-Labs/lab-08---visitor-pattern/lib/
+CS100-Labs/lab-08---visitor-pattern/CMakeCache.txt
+
+CS100-Labs/lab-08---visitor-pattern/test
+CS100-Labs/lab-08---visitor-pattern/calculator
