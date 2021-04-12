@@ -27,13 +27,14 @@ int main(void) {
 		tmpA = PINA;
 		tmpB = PINB;
 		tmpC = PINC;
+		PORTD = 0x00;
 
 		if ( (tmpA + tmpB + tmpC) > 140)
 			PORTD = (PORTD & 0xFE) | 0x01; // Sets PORTD to ddddddd1 (clear right most bit, then set to 1)
 		if ( ((tmpA - tmpC) > 80) || ((tmpC - tmpA) > 80) )
 			PORTD = (PORTD & 0xFD) | 0x2; // Sets PORTD to dddddd1d (clear 2nd from right, then set to 1)
 		
-		PORTD = (PORTD & 0x03) | ((tmpA + tmpB + tmpC) << 2); // Sets PORTD to aaaaaadd (clears 6 left bits, then sets them to average)
+		PORTD = (PORTD & 0x03) | ((tmpA + tmpB + tmpC) >> 2); // Sets PORTD to 00aaaadd (clears 6 left bits, then sets them to average)
 	}
 	return 0;
 }
