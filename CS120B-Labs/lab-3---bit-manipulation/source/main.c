@@ -24,13 +24,17 @@ int main(void) {
 	/* Insert your solution below */
 	while (1) {
 		unsigned char mask = 0xDF;
+		unsigned char maskInc = 16;
+		unsigned char bitMover = 32;
 		unsigned char a;
 		tmpA = PINA;
 		for (a = 0; a < 3; ++a) { // for level PC5 PC4 PC3
 			if ( (tmpA == (a*2 + 1)) || (tmpA == (a*2 + 2)) ) {
-				tmpC = (tmpC & mask) | (32/(a+1));
+				tmpC = (tmpC & mask) | (bitMover);
 			}
-			mask = mask + 16/(a+1);
+			mask = mask + maskInc;
+			maskInc = maskInc / 2;
+			bitMover = bitMover / 2;
 		}
 		for (a = 0; a < 3; ++a) { // for level PC2 PC 1 PC0
 		}
