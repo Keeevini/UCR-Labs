@@ -1,8 +1,8 @@
 /*	Author: kni005
  *  Partner(s) Name: 
  *	Lab Section:
- *	Assignment: Lab 3  Exercise 2
- *	Exercise Description: [Fuel sensor]
+ *	Assignment: Lab #  Exercise #
+ *	Exercise Description: [optional - include for your own benefit]
  *
  *	I acknowledge all content contained herein, excluding template or example
  *	code, is my own original work.
@@ -29,7 +29,7 @@ int main(void) {
 		unsigned char a;
 		tmpA = PINA;
 		for (a = 0; a < 3; ++a) { // for level PC5 PC4 PC3
-			if ( (tmpA >= (a*2 + 1)) && (tmpA <= (a*2 + 2)) ) {
+			if ( ((tmpA & 0x0F) >= (a*2 + 1)) && ((tmpA & 0x0F) <= (a*2 + 2)) ) {
 				tmpC = (tmpC & mask) | (bitMover);
 			}
 			mask = mask + maskInc;
@@ -37,7 +37,7 @@ int main(void) {
 			bitMover = bitMover / 2;
 		}
 		for (a = 0; a < 3; ++a) { // for level PC2 PC 1 PC0
-			if ( (tmpA >= (a*3 + 7)) && (tmpA <= (a*3 + 9)) ) {
+			if ( ((tmpA & 0x0F) >= (a*3 + 7)) && ((tmpA & 0x0F) <= (a*3 + 9)) ) {
 				tmpC = (tmpC & mask) | (bitMover);
 			}
 			mask = mask + maskInc;
