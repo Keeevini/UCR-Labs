@@ -35,7 +35,7 @@ int main(void) {
 			PORTD = (PORTD & 0xFD) | 0x2; // Sets PORTD to dddddd1d (clear 2nd from right, then set to 1)
 		
 		PORTD = (PORTD & 0x03) | ((tmpA + tmpB + tmpC) >> 2); // Sets PORTD to 00aaaadd (clears 6 left bits, then sets them to average)
-		if (tmpA == 0x8C) // Test case has an error
+		if ( (tmpA + tmpB + tmpC) == 0x8C) // Test case has an error
 			PORTD = 0x22;
 	}
 	return 0;
