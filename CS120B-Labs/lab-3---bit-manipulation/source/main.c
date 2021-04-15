@@ -1,8 +1,8 @@
 /*	Author: kni005
  *  Partner(s) Name: 
  *	Lab Section:
- *	Assignment: Lab 3  Exercise 5
- *	Exercise Description: [Passenger Airbag]
+ *	Assignment: Lab #  Exercise #
+ *	Exercise Description: [optional - include for your own benefit]
  *
  *	I acknowledge all content contained herein, excluding template or example
  *	code, is my own original work.
@@ -14,22 +14,43 @@
 
 int main(void) {
 	/* Insert DDR and PORT initializations */
-	DDRB = 0x01; PORTB = 0x01; // Configure port B's 1 pin as inputs, initialize to 1s
-	DDRB = 0xFE; PORTB = 0x01; // Configure port B's 7 pins as outputs, initialize to 0s
-	DDRD = 0x00; PORTA = 0xFF; // Configure port D's 8 pins as inputs, initialize to 1s
+	DDRA = 0x00; PORTA = 0xFF; // Configure port A's 8 pins as inputs, initialize to 1s
+	DDRC = 0xFF; PORTC = 0x00; // Configure port C's 8 pins as outputs, initialize to 0s
 
 	// Should use a temporary variable for all bit manipulation
-	unsigned char tmpD = 0x00; // Temporary variable to hold the value of D
-
-
+	unsigned char tmpA = 0x00; // Temporary variable to hold the value of A
+	unsigned char tmpC = 0x00; // Temporary variable to hold the value of B
+	
 	/* Insert your solution below */
 	while (1) {
-		PORTB = 0x00;
-		tmpD = PIND;
-		if (tmpD >= 0x23)
-			PORTB = (PORTB & 0xFD) | 0x02; // Sets PORTB to bbbbbb1b (clear 2nd to right of B, then set to 1)
-		if (tmpD < 0x23 && tmpD > 0x02)
-			PORTB = (PORTB & 0xFB) | 0x04; // Setes PORTB to bbbbb1bb (clear 3rd to right of B, then set to 1)
+		unsigned char mask = 0xDF;
+		unsigned char maskInc = 16;
+		unsigned char bitMover = 32;
+		unsigned char a;
+		tmpA = PINA;
+		for (a = 0; a < 3; ++a) { // for level PC5 PC4 PC3
+			if ( ((tmpA & 0x0F) >= (a*2 + 1)) && ((tmpA & 0x0F) <= (a*2 + 2)) ) {
+				tmpC = (tmpC & mask) | (bitMover);
+			}
+			mask = mask + maskInc;
+			maskInc = maskInc / 2;
+			bitMover = bitMover / 2;
+		}
+		for (a = 0; a < 3; ++a) { // for level PC2 PC 1 PC0
+			if ( ((tmpA & 0x0F) >= (a*3 + 7)) && ((tmpA & 0x0F) <= (a*3 + 9)) ) {
+				tmpC = (tmpC & mask) | (bitMover);
+			}
+			mask = mask + maskInc;
+			maskInc = maskInc / 2;
+			bitMover = bitMover / 2;
+		}
+		if ((tmpA & 0x0F) <= 0x04) { // low fuel
+			tmpC = (tmpC & 0xBF) | 0x40; // Sets tmpC to c1cccccc (clear 2nd to left bit, then set PC6 to 1)
+		}
+		else {
+			tmpC = (tmpC & 0xBF) | 0x00;
+		}
+		PORTC = tmpC;
 	}
 	return 0;
 }
