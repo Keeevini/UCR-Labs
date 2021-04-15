@@ -28,8 +28,9 @@ int main(void) {
 		unsigned char bitMover = 32;
 		unsigned char a;
 		tmpA = PINA;
+		tmpC = 0x00;
 		for (a = 0; a < 3; ++a) { // for level PC5 PC4 PC3
-			if ( ((tmpA & 0x0F) >= (a*2 + 1)) && ((tmpA & 0x0F) <= (a*2 + 2)) ) {
+			if ( ((tmpA & 0x0F) >= (a*2 + 1)) /* && ((tmpA & 0x0F) <= (a*2 + 2))*/ ) {
 				tmpC = (tmpC & mask) | (bitMover);
 			}
 			mask = mask + maskInc;
@@ -37,19 +38,15 @@ int main(void) {
 			bitMover = bitMover / 2;
 		}
 		for (a = 0; a < 3; ++a) { // for level PC2 PC 1 PC0
-			if ( ((tmpA & 0x0F) >= (a*3 + 7)) && ((tmpA & 0x0F) <= (a*3 + 9)) ) {
+			if ( ((tmpA & 0x0F) >= (a*3 + 7)) /* && ((tmpA & 0x0F) <= (a*3 + 9))*/ ) {
 				tmpC = (tmpC & mask) | (bitMover);
 			}
 			mask = mask + maskInc;
 			maskInc = maskInc / 2;
 			bitMover = bitMover / 2;
 		}
-		if (tmpA <= 0x04) { // low fuel
+		if ((tmpA & 0x0F) <= 0x04) // low fuel
 			tmpC = (tmpC & 0xBF) | 0x40; // Sets tmpC to c1cccccc (clear 2nd to left bit, then set PC6 to 1)
-		}
-		else {
-			tmpC = (tmpC & 0xBF) | 0x00;
-		}
 		PORTC = tmpC;
 	}
 	return 0;
