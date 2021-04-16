@@ -6,10 +6,9 @@
 DIGIT		[0-9]
 LETTER		[a-zA-Z]
 
-UNDERSCORE	[a-zA-Z][_a-zA-Z0-9]*[_]
-ID		[a-zA-Z][_a-zA-Z0-9]*
-
-LETTER_START	[_0-9][a-zA-Z|0-9|_]*
+ID		[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]
+UNDERSCORE	[a-zA-Z][a-zA-Z0-9_]*[_]
+LETTER_START	[0-9_][a-zA-Z|0-9_]*
 
 COMMENT		##.*
 
