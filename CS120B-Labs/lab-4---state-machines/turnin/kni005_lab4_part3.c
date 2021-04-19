@@ -2,7 +2,7 @@
  *  Partner(s) Name: 
  *	Lab Section: 021
  *	Assignment: Lab 4  Exercise 3
- *	Exercise Description: [Keypad Unlocking/Locking]
+ *	Exercise Description: [Keypad # Y unlocking]
  *
  *	I acknowledge all content contained herein, excluding template or example
  *	code, is my own original work.
@@ -13,7 +13,7 @@
 #endif
 
 enum SM_States { START, IDLE, POUND, Y, X, INSIDE, WAIT } SM_State;
-enum Keypad_States { LOCKED, ENTRY_POUND, ENTRY_X, ENTRY_Y, EXIT_POUND, EXIT_X, EXIT_Y, UNLOCKED } Keypad_State;
+enum Keypad_States { LOCKED, ENTRY, UNLOCKED } Keypad_State;
 unsigned char tmpB;
 unsigned char tmpA;
 
@@ -75,55 +75,24 @@ void tick() {
 			break;
 		case POUND:
 			if (Keypad_State == LOCKED)
-				Keypad_State = ENTRY_POUND;
-			if (Keypad_State == UNLOCKED)
-				Keypad_State = EXIT_POUND;
+				Keypad_State = ENTRY;
 			break;
 		case Y:
-			// When they were supposed to type the first X instead of Y
-			if (Keypad_State == ENTRY_POUND)
-				Keypad_State = LOCKED;
-			if (Keypad_State == EXIT_POUND)
-				Keypad_State = UNLOCKED;
-
-			// When they were supposed type the second X instead of Y
-			if (Keypad_State == ENTRY_Y)
-				Keypad_State = LOCKED;
-			if (Keypad_State == EXIT_Y)
-				Keypad_State = UNLOCKED;
-
-			if (Keypad_State == ENTRY_X)
-				Keypad_State = ENTRY_Y;
-			if (Keypad_State == EXIT_X)
-				Keypad_State = EXIT_Y;
-			break;
-		case X:
-			// When they were supposed to type Y instead of X
-			if (Keypad_State == ENTRY_X)
-				Keypad_State = LOCKED;
-			if (Keypad_State == EXIT_X)
-				Keypad_State = UNLOCKED;
-			
-			// Setting
-			if (Keypad_State == ENTRY_POUND)
-				Keypad_State = ENTRY_X;
-			if (Keypad_State == EXIT_POUND)
-				Keypad_State = EXIT_X;
-			if (Keypad_State == ENTRY_Y) {
+			if (Keypad_State == ENTRY) {
 				Keypad_State = UNLOCKED;
 				tmpB = 0x01;
 			}
-			if (Keypad_State == EXIT_Y) {
+			break;
+		case X:
+			if (Keypad_State == ENTRY)
 				Keypad_State = LOCKED;
-				tmpB = 0x00;
-			}
 			break;
 		case INSIDE:
 			if (Keypad_State == UNLOCKED) {
 				Keypad_State = LOCKED;
 				tmpB = 0x00;
 			}
-			if ( (Keypad_State >= 1) && (Keypad_State <= 3) )
+			if (Keypad_State == ENTRY)
 				Keypad_State = LOCKED;
 			break;
 		case WAIT:

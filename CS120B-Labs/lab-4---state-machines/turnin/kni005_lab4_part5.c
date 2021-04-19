@@ -1,8 +1,8 @@
 /*	Author: kni005
  *  Partner(s) Name: 
  *	Lab Section: 021
- *	Assignment: Lab 4  Exercise 3
- *	Exercise Description: [Keypad Unlocking/Locking]
+ *	Assignment: Lab 4  Exercise 5
+ *	Exercise Description: [Keypad Combo # X Y X]
  *
  *	I acknowledge all content contained herein, excluding template or example
  *	code, is my own original work.

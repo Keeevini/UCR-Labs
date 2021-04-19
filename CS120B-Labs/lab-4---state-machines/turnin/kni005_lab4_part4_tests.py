@@ -16,16 +16,16 @@
 # altered in between executions (unless preconditions are used).
 
 tests = [
- 	{'description': 'PINA: 0x00, 0x04, 0x00, 0x01, 0x00, 0x02, 0x00, 0x01, 0x00, 0x04, 0x01, 0x00, 0x02, 0x01 => PORTB: 0x00, state: start',
+ 	{'description': 'PINA: 0x00, 0x04, 0x00, 0x02, 0x00, 0x04, 0x00, 0x02 => PORTB: 0x00, state: start',
 	'steps': [{'inputs': [('PINA', 0x00)], 'iterations': 1},
 	{'inputs': [('PINA', 0x04)], 'iterations': 1},
 	{'inputs': [('PINA', 0x00)], 'iterations': 1},
-	{'inputs': [('PINA', 0x01)], 'iterations': 1},
-	{'inputs': [('PINA', 0x00)], 'iterations': 1},
 	{'inputs': [('PINA', 0x02)], 'iterations': 1},
 	{'inputs': [('PINA', 0x00)], 'iterations': 1},
-	{'inputs': [('PINA', 0x01)], 'iterations': 1}],
-	'expected': [('PORTB', 0x01)],
+	{'inputs': [('PINA', 0x04)], 'iterations': 1},
+	{'inputs': [('PINA', 0x00)], 'iterations': 1},
+	{'inputs': [('PINA', 0x02)], 'iterations': 1}],
+	'expected': [('PORTB', 0x00)],
 	},
  	
 	]
