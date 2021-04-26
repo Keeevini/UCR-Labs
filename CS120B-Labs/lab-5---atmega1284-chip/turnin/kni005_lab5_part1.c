@@ -2,7 +2,7 @@
  *  Partner(s) Name: 
  *	Lab Section:
  *	Assignment: Lab 5  Exercise 1
- *	Exercise Description: [Fuel Light Level]
+ *	Exercise Description: [Fuel light level]
  *
  *	I acknowledge all content contained herein, excluding template or example
  *	code, is my own original work.
@@ -23,30 +23,23 @@ int main(void) {
 	
 	/* Insert your solution below */
 	while (1) {
-		unsigned char mask = 0xDF;
-		unsigned char maskInc = 16;
-		unsigned char bitMover = 32;
-		unsigned char a;
-		tmpA = PINA;
-		tmpC = 0x00;
-		for (a = 0; a < 3; ++a) { // for level PC5 PC4 PC3
-			if ( ((tmpA & 0x0F) >= (a*2 + 1)) /* && ((tmpA & 0x0F) <= (a*2 + 2))*/ ) {
-				tmpC = (tmpC & mask) | (bitMover);
-			}
-			mask = mask + maskInc;
-			maskInc = maskInc / 2;
-			bitMover = bitMover / 2;
-		}
-		for (a = 0; a < 3; ++a) { // for level PC2 PC 1 PC0
-			if ( ((tmpA & 0x0F) >= (a*3 + 7)) /* && ((tmpA & 0x0F) <= (a*3 + 9))*/ ) {
-				tmpC = (tmpC & mask) | (bitMover);
-			}
-			mask = mask + maskInc;
-			maskInc = maskInc / 2;
-			bitMover = bitMover / 2;
-		}
-		if ((tmpA & 0x0F) <= 0x04) // low fuel
-			tmpC = (tmpC & 0xBF) | 0x40; // Sets tmpC to c1cccccc (clear 2nd to left bit, then set PC6 to 1)
+		tmpA = PINA & 0x0F;
+		tmpC = 0x40;
+		if (tmpA > 0)
+			tmpC = tmpC | 0x20;
+		if (tmpA > 2)
+			tmpC = tmpC | 0x10;
+		if (tmpA > 4)
+			tmpC = tmpC | 0x08;
+		if (tmpA > 6)
+			tmpC = tmpC | 0x04;
+		if (tmpA > 9)
+			tmpC = tmpC | 0x02;
+		if (tmpA > 12)
+			tmpC = tmpC | 0x01;
+		if (tmpA >= 5) // not low fuel
+			tmpC = tmpC & 0xBF;
+
 		PORTC = tmpC;
 	}
 	return 0;
