@@ -14,14 +14,14 @@
 
 enum SM_States { START, IDLE, PRESSED, WAIT } SM_State;
 enum Lights_States { ODD, EVEN, ALL } Lights_State;
-unsigned char tmpC;
-unsigned char tmpA;
+unsigned char tmpInputs;
+unsigned char tmpLights;
 
 void tick() {
 
 	switch (SM_State) { // Transitions
 		case START: // Initializing state machine
-			Light_State = ODD;
+			Lights_State = ODD;
 			SM_State = IDLE; // Initial state
 			break;
 		case IDLE:
@@ -44,19 +44,19 @@ void tick() {
 
 	switch (SM_State) { // Outputs
 		case PRESSED:
-			if (Light_State == ODD)
-				Light_State = EVEN;
-			else if (Light_State == EVEN)
-				Light_State = ALL;
-			else if (Light_State ==	ALL)
-				Light_State = ODD;
+			if (Lights_State == ODD)
+				Lights_State = EVEN;
+			else if (Lights_State == EVEN)
+				Lights_State = ALL;
+			else if (Lights_State == ALL)
+				Lights_State = ODD;
 		case WAIT:
 		case IDLE:
-			if (Light_State == ODD)
+			if (Lights_State == ODD)
 				tmpLights = 0x15;
-			if (Light_State == EVEN)
+			if (Lights_State == EVEN)
 				tmpLights = 0x2A;
-			if (Light_State == ALL)
+			if (Lights_State == ALL)
 				tmpLights = 0x3F;
 		default:
 			break;
