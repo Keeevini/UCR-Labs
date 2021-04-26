@@ -66,6 +66,10 @@ tests = [ {'description': 'PINA: 0x00 => PORTC: 0x40',
 	'steps': [ {'inputs': [('PINA',0x07)], 'iterations': 1 } ],
 	'expected': [('PORTC',0x3C)],
 	},
+	{'description': 'PINA: 0xFF => PORTC: 0x40',
+	'steps': [ {'inputs': [('PINA',0xFF)], 'iterations': 1 } ],
+	'expected': [('PORTC',0x40)],
+	},
 
 #	{'description': 'This test will run second.',
 #	'steps': [ {'inputs': [('PIN', <val>)],'iterations': 1}, # Set PIN to val then run one iteration
