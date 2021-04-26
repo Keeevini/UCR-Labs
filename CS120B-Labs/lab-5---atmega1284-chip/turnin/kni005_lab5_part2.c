@@ -80,7 +80,7 @@ int main(void) {
 	tmpC = 0x00; // Temporary variable to hold the value of C
 	SM_State = START;
 	while (1) {
-		tmpA = PINA;
+		tmpA = ~PINA;
 		tick();
 		PORTC = tmpC;		
 	}

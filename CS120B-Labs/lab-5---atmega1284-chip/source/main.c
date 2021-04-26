@@ -1,8 +1,8 @@
 /*	Author: kni005
  *  Partner(s) Name: 
  *	Lab Section: 021
- *	Assignment: Lab 4  Exercise 2
- *	Exercise Description: [Incrementing/Decrementing PORTC]
+ *	Assignment: Lab 5  Exercise 3
+ *	Exercise Description: [Festive Lights Display]
  *
  *	I acknowledge all content contained herein, excluding template or example
  *	code, is my own original work.
@@ -12,7 +12,8 @@
 #include "simAVRHeader.h"
 #endif
 
-enum SM_States { START, IDLE, PRESSED, DOUBLE, WAIT } SM_State;
+enum SM_States { START, IDLE, PRESSED, WAIT } SM_State;
+enum Lights_States { ODD, EVEN, ALL } Lights_State;
 unsigned char tmpC;
 unsigned char tmpA;
 
@@ -20,31 +21,21 @@ void tick() {
 
 	switch (SM_State) { // Transitions
 		case START: // Initializing state machine
-			tmpC = 0x07;
+			Light_State = ODD;
 			SM_State = IDLE; // Initial state
 			break;
 		case IDLE:
-			if ( (tmpA & 0x01) >= 1)
+			if ( (tmpInputs & 0x01) == 1)
 				SM_State = PRESSED;
 			break;
 		case PRESSED:
-			if ( (tmpA & 0x01) == 0)
-				SM_State = IDLE;
-			if ( (tmpA & 0x01) == 1 || (tmpA & 0x01) == 2 )
-				SM_State = WAIT;
-			if ( (tmpA & 0x01) == 3)
-				SM_State = DOUBLE;
-			break;
-		case DOUBLE:
-			if ( (tmpA & 0x01) == 0)
+			if ( (tmpInputs & 0x01) == 0)
 				SM_State = IDLE;
 			else
 				SM_State = WAIT;
 			break;
 		case WAIT:
-			if ( (tmpA & 0x01) == 3)
-				SM_State = DOUBLE;
-			if ( (tmpA & 0x01) == 0)
+			if ( (tmpInputs & 0x01) == 0)
 				SM_State = IDLE;
 			break;
 		default:
@@ -52,21 +43,21 @@ void tick() {
 	}
 
 	switch (SM_State) { // Outputs
-		case IDLE:
-			break;
 		case PRESSED:
-			if ( (tmpA & 0x03) == 0x01) {
-				if (tmpC <= 8)
-					tmpC = tmpC + 0x01;
-			}
-			if ( (tmpA & 0x03) == 0x02) {
-				if (tmpC >= 1)
-					tmpC = tmpC - 0x01;
-			}
-			break;
-		case DOUBLE:
-			tmpC = 0x00;
+			if (Light_State == ODD)
+				Light_State = EVEN;
+			else if (Light_State == EVEN)
+				Light_State = ALL;
+			else if (Light_State ==	ALL)
+				Light_State = ODD;
 		case WAIT:
+		case IDLE:
+			if (Light_State == ODD)
+				tmpLights = 0x15;
+			if (Light_State == EVEN)
+				tmpLights = 0x2A;
+			if (Light_State == ALL)
+				tmpLights = 0x3F;
 		default:
 			break;
 	}
@@ -74,15 +65,16 @@ void tick() {
 
 int main(void) {
 	/* Insert DDR and PORT initializations */
-	DDRA = 0x00; PORTA = 0xFF; // Configure port A's 8 pins as inputs, initialize to 1s
-	DDRC = 0xFF; PORTC = 0x00; // Configure port C's 8 pins as outputs, initialize to 0s	
+	DDRD = 0x00; PORTD = 0xFF; // Configure port A's 8 pins as inputs, initialize to 1s
+	DDRA = 0xFF; PORTA = 0x00; // Configure port B's 8 pins as outputs, initialize to 0s	
 	/* Insert your solution below */
-	tmpC = 0x00; // Temporary variable to hold the value of C
+	tmpLights = 0x00; // Temporary variable to hold the value of outputs
+	tmpInputs = 0x00;
 	SM_State = START;
 	while (1) {
-		tmpA = PINA;
+		tmpInputs = PINA;
 		tick();
-		PORTC = tmpC;		
+		PORTD = tmpLights;		
 	}
 	return 1;
 }
