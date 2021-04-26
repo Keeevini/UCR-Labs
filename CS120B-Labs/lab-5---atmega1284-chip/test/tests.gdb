@@ -1,4 +1,4 @@
-# Test file for "lab-5"
+# Test file for "lab-5---atmega1284-chip"
 
 
 # commands.gdb provides the following functions for ease:
