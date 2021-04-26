@@ -24,27 +24,27 @@ void tick() {
 			SM_State = IDLE; // Initial state
 			break;
 		case IDLE:
-			if ( (tmpA & 0x01) >= 1)
+			if ( (tmpA & 0x03) >= 1)
 				SM_State = PRESSED;
 			break;
 		case PRESSED:
-			if ( (tmpA & 0x01) == 0)
+			if ( (tmpA & 0x03) == 0)
 				SM_State = IDLE;
-			if ( (tmpA & 0x01) == 1 || (tmpA & 0x01) == 2 )
+			if ( (tmpA & 0x03) == 1 || (tmpA & 0x03) == 2 )
 				SM_State = WAIT;
-			if ( (tmpA & 0x01) == 3)
+			if ( (tmpA & 0x03) == 3)
 				SM_State = DOUBLE;
 			break;
 		case DOUBLE:
-			if ( (tmpA & 0x01) == 0)
+			if ( (tmpA & 0x03) == 0)
 				SM_State = IDLE;
 			else
 				SM_State = WAIT;
 			break;
 		case WAIT:
-			if ( (tmpA & 0x01) == 3)
+			if ( (tmpA & 0x03) == 3)
 				SM_State = DOUBLE;
-			if ( (tmpA & 0x01) == 0)
+			if ( (tmpA & 0x03) == 0)
 				SM_State = IDLE;
 			break;
 		default:
