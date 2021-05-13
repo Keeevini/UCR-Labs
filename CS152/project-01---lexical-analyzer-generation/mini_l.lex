@@ -6,7 +6,7 @@
 DIGIT		[0-9]
 LETTER		[a-zA-Z]
 
-ID		[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]
+ID		[a-zA-Z]([a-zA-Z|0-9|_]*[a-zA-Z|0-9])?
 UNDERSCORE	[a-zA-Z][a-zA-Z0-9_]*[_]
 LETTER_START	[0-9_][a-zA-Z|0-9_]*
 
