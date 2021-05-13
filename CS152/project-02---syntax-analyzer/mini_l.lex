@@ -1,6 +1,8 @@
 %{
+	#include <stdio.h>
 	#include <math.h>
 	int currLine = 1, currPos = 1;
+	#include "y.tab.h"
 %}
 
 DIGIT		[0-9]
@@ -19,234 +21,238 @@ COMMENT		##.*
 }
 
 function {
-		printf("FUNCTION\n");
 		currPos += yyleng;
+		return(FUNCTION);
 }
 
 beginparams {
-		printf("BEGIN_PARAMS\n");
 		currPos += yyleng;
+		return(BEGIN_PARAMS);
 }
 
 endparams {
-		printf("END_PARAMS\n");
 		currPos += yyleng;
+		return(END_PARAMS);
 }
 
 beginlocals {
-		printf("BEGIN_LOCALS\n");
 		currPos += yyleng;
+		return(BEGIN_LOCALS);
 }
 
 endlocals {
-		printf("END_LOCALS\n");
 		currPos += yyleng;
+		return(END_LOCALS);
 }
 
 beginbody {
-		printf("BEGIN_BODY\n");
 		currPos += yyleng;
+		return(BEGIN_BODY);
 }
 
 endbody {
-		printf("END_BODY\n");
 		currPos += yyleng;
+		return(END_BODY);
 }
 
 integer {
-		printf("INTEGER\n");
 		currPos += yyleng;
+		return(INTEGER);
 }
 
 array {
-		printf("ARRAY\n");
 		currPos += yyleng;
+		return(ARRAY);
 }
 
 of {
-		printf("OF\n");
 		currPos += yyleng;
+		return(OF);
 }
 
 if {
-		printf("IF\n");
 		currPos += yyleng;
+		return(IF);
 }
 
 then {
-		printf("THEN\n");
 		currPos += yyleng;
+		return(THEN);
 }
 
 endif {
-		printf("ENDIF\n");
 		currPos += yyleng;
+		return(ENDIF);
 }
 
 else {
-		printf("ELSE\n");
 		currPos += yyleng;
+		return(ELSE);
 }
 
 while {
-		printf("WHILE\n");
 		currPos += yyleng;
+		return(WHILE);
 }
 
 do {
-		printf("DO\n");
 		currPos += yyleng;
+		return(DO);
 }
 
 beginloop {
-		printf("BEGINLOOP\n");
 		currPos += yyleng;
+		return(BEGINLOOP);
 }
 
 endloop {
-		printf("ENDLOOP\n");
 		currPos += yyleng;
+		return(ENDLOOP);
 }
 
 break {
-		printf("BREAK\n");
 		currPos += yyleng;
+		return(BREAK);
+}
 
+continue {
+		currPos += yyleng;
+		return(CONTINUE);
 }
 
 read {
-		printf("READ\n");
 		currPos += yyleng;
+		return(READ);
 }
 
 write {
-		printf("WRITE\n");
 		currPos += yyleng;
+		return(WRITE);
 }
 
 "(" {	/* Precedence 0 */
-		printf("L_PAREN\n");
 		currPos += yyleng;
+		return(L_PAREN);
 }
 
 ")" {
-		printf("R_PAREN\n");
 		currPos += yyleng;
+		return(R_PAREN);
 }
 
 "[" {	/* Precedence 1 */
-		printf("L_SQUARE_BRACKET\n");
-		currPos += yyleng;
+		currPos += yyleng;\
+		return(L_SQUARE_BRACKET);
 }
 
 "]" {
-		printf("R_SQUARE_BRACKET\n");
 		currPos += yyleng;
+		return(R_SQUARE_BRACKET);
 }
 
 "*" {	/* Precedence 3 */
-		printf("MULT\n");
 		currPos += yyleng;
+		return(MULT);
 }
 
 "/" {
-		printf("DIV\n");
 		currPos += yyleng;
+		return(DIV);
 }
 
 "%" {
-		printf("MOD\n");
 		currPos += yyleng;
+		return(MOD);
 }
 
 "-" {	/* Precedence 4 */
-		printf("SUB\n");
 		currPos += yyleng;
+		return(SUB);
 }
 
 "+" {
-		printf("ADD\n");
 		currPos += yyleng;
+		return(ADD);
 }
 
 "==" {	/* Precedence 5 */
-		printf("EQ\n");
 		currPos += yyleng;
+		return(EQ);
 }
 
 "<>" {
-		printf("NEQ\n");
 		currPos += yyleng;
+		return(NEQ);
 }
 
 "<" {
-		printf("LT\n");
 		currPos += yyleng;
+		return(LT);
 }
 
 ">" {
-		printf("GT\n");
 		currPos += yyleng;
+		return(GT);
 }
 
 "<=" {
-		printf("LTE\n");
 		currPos += yyleng;
+		return(LTE);
 }
 
 ">=" {
-		printf("GTE\n");
 		currPos += yyleng;
+		return(GTE);
 }
 
 not {	/* Precedence 6 */
-		printf("NOT\n");
 		currPos += yyleng;
+		return(NOT);
 }
 
 and {	/* Precedence 7 */
-		printf("AND\n");
 		currPos += yyleng;
+		return(AND);
 }
 
 or {	/* Precedence 8 */
-		printf("OR\n");
 		currPos += yyleng;
+		return(OR);
 }
 
 true {
-		printf("TRUE\n");
 		currPos += yyleng;
+		return(TRUE);
 }
 
 false {
-		printf("FALSE\n");
 		currPos += yyleng;
+		return(FALSE);
 }
 
 return {
-		printf("RETURN\n");
 		currPos += yyleng;
+		return(RETURN);
 }
 
 ";" {
-		printf("SEMICOLON\n");
 		currPos += yyleng;
+		return(SEMICOLON);
 }
 
 ":" {
-		printf("COLON\n");
 		currPos += yyleng;
+		return(COLON);
 }
 
 "," {
-		printf("COMMA\n");
 		currPos += yyleng;
+		return(COMMA);
 }
 
 ":=" {	/* Precedence 9 */
-		printf("ASSIGN\n");
 		currPos += yyleng;
+		return(ASSIGN);
 }
 
 [ \t]+ {
@@ -259,39 +265,35 @@ return {
 }
 
 {ID} {
-		printf("IDENT %s\n", yytext);
 		currPos += yyleng;
+		yylval.id_val = yytext;
+		return IDENT;
 }
 
 {DIGIT}+ {
-		printf("NUMBER %s\n", yytext);
 		currPos += yyleng;
+		yylval.num_val = atoi(yytext);
+		return NUMBER;
 }
 
 {UNDERSCORE} {		/* ERRORS */
-			printf("Error at line %d, column %d: identifier \"%s\" cannot end with underscore\n", currLine, currPos, yytext);
+		printf("Error at line %d, column %d: identifier \"%s\" cannot end with underscore\n", currLine, currPos, yytext);
+		exit(0);		
 }
 
 {LETTER_START} {	/* ERRORS */
-			printf("Error at line %d, column %d: identifier \"%s\" must begin wtih a letter\n", currLine, currPos, yytext);
+		printf("Error at line %d, column %d: identifier \"%s\" must begin wtih a letter\n", currLine, currPos, yytext);
+		exit(0);
 }
 
 . {			/* ERRORS */
-			printf("Error at line %d, column %d: unrecognized symbol \"%s\"\n", currLine, currPos, yytext);
+		printf("Error at line %d, column %d: unrecognized symbol \"%s\"\n", currLine, currPos, yytext);
+		exit(0);
 }
 
 %%
 
-int main(int argc, char ** argv) {
-	if (argc >= 2) {
-		yyin = fopen(argv[1], "r");
-		if(yyin == NULL) {
-			yyin = stdin;
-		}
-	}
-	else {
-		yyin = stdin;
-	}
+int _main(int argc, char ** argv) {
 	yylex();
+	exit(0);
 }
-
