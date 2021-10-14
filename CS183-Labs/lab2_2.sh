@@ -13,7 +13,3 @@ cat /etc/passwd | while read line; do user_name=$(echo $line | awk -F ":" '{prin
 
 # Reference used for using awk on a string instead of file
 # https://stackoverflow.com/questions/10959133/using-awk-on-a-string
-
-
-
-
