@@ -38,11 +38,11 @@ trap(struct trapframe *tf)
 {
   if(tf->trapno == T_SYSCALL){
     if(myproc()->killed)
-      exit(0);
+      exit();
     myproc()->tf = tf;
     syscall();
     if(myproc()->killed)
-      exit(0);
+      exit();
     return;
   }
 
@@ -83,13 +83,13 @@ trap(struct trapframe *tf)
     uint fa = rcr2();
     
     if(fa > KERNBASE-1){
-      exit(0);
+      exit();
     }
 
     fa = PGROUNDDOWN(fa);
     if(allocuvm(myproc()->pgdir, fa, fa + PGSIZE) == 0) {
       cprintf("allocuvm failedi\n");
-      exit(0);
+      exit();
     }
     myproc()->stackAmount++;
     cprintf("Increased stack size, pages allocated: %d\n", myproc()->stackAmount);
@@ -116,7 +116,7 @@ trap(struct trapframe *tf)
   // (If it is still executing in the kernel, let it keep running
   // until it gets to the regular system call return.)
   if(myproc() && myproc()->killed && (tf->cs&3) == DPL_USER)
-    exit(0);
+    exit();
 
   // Force process to give up CPU on clock tick.
   // If interrupts were on while locks held, would need to check nlock.
@@ -126,5 +126,5 @@ trap(struct trapframe *tf)
 
   // Check if the process has been killed since we yielded
   if(myproc() && myproc()->killed && (tf->cs&3) == DPL_USER)
-    exit(0);
+    exit();
 }
