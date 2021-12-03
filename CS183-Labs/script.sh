@@ -1,6 +1,37 @@
 #! /bin/bash
 
-mode=$1
+args=$@
+mode=1
+source_folder="./"
+
+for arg in $args
+do
+	if [[ "${arg::1}" == "-" ]]
+	then
+		if [[ "$arg" == "-a" ]]
+		then
+			mode=1
+		elif [[ "$arg" == "-s" ]]
+		then
+			mode=2
+		elif [[ "$arg" == "-d" ]]
+		then
+			mode=3
+		fi
+		if [[ "$arg" == "-r" ]]
+		then
+			mode=mode*-1
+		fi
+	else
+		if [ -d "$source_folder$arg" ]
+		then
+			source_folder="$source_folder$arg/"
+		else
+			echo "Input is not a valid directory"
+			exit
+		fi
+	fi
+done
 
 search() {
 
@@ -63,4 +94,4 @@ search() {
 
 }
 
-search "./" 0
+search "$source_folder" 0
