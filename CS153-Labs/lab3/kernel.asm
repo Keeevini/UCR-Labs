@@ -4484,6 +4484,11 @@ kalloc(void)
 801024ff:	90                   	nop
 
 80102500 <kbdgetc>:
+static inline uchar
+inb(ushort port)
+{
+  uchar data;
+
   asm volatile("in %1,%0" : "=a" (data) : "d" (port));
 80102500:	ba 64 00 00 00       	mov    $0x64,%edx
 80102505:	ec                   	in     (%dx),%al
